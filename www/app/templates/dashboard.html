@@ -1,0 +1,33 @@
+<ion-view>
+  <ion-nav-title>Help Já <i class="icon ion-ios-location"></i></ion-nav-title>
+  <ion-content padding="true">
+    <br>
+    <form name="form.search" ng-submit="form.search.$valid && goToList()">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" ng-model="search.string" required="required" placeholder="Qual serviço você precisa?">
+      </label>
+      <br />
+      <button class="button button-balanced button-block" ng-disabled="form.search.$invalid"><b>Buscar</b></button>
+    </form>
+    <br>
+    <br>
+    <h3>Encontre profissionais</h3>
+    <ion-list>
+      <ion-item class="item-icon-right item-avatar item-royal" ui-sref="detail({id: event.id})" ng-repeat="event in events track by event.id | limitTo:limit">
+        <img ng-src="{{event.thumb}}">
+        <h2 class="positive">{{event.name}}</h2>
+        <p>
+          <b>{{event.city}}</b> / Local -  {{event.district}}<br>
+          {{event.street}} {{event.number}}, {{event.zip}} {{event.city}}
+        </p>
+        <i class="icon ion-ios-arrow-right"></i>
+      </ion-item>
+      <ion-item class="text-center item-royal" ng-if="events && !events.length">Profissional não encontrado :(</ion-item>
+    </ion-list>
+    <ion-infinite-scroll
+      ng-if="!events"
+      on-infinite="loadNext()">
+    </ion-infinite-scroll>
+  </ion-content>
+</ion-view>
